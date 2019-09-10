@@ -22,8 +22,11 @@ switch($text)
 	case "ASSISTENZA":
 		sendMessage($chatId,"Quale problema riscontri?",$tastierabenvenuto);
 		break;
+	case "IDCHAT":
+		sendMessage($chatId,"<b>$chatId</b>",$tastierabenvenuto);
+		break;	
 	default:
-		$tastierabenvenuto = '["INFORMAZIONI"],["ASSISTENZA"],["HOME"]';
+		$tastierabenvenuto = '["INFORMAZIONI"],["ASSISTENZA"],["HOME"],["IDCHAT"]';
 		sendMessage($chatId,"Ciao <b>$nome</b>! Sono il tuo assistente GM Stream, in cosa posso esserti utile?",$tastierabenvenuto);
 	break;
 }

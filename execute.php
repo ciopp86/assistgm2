@@ -1,5 +1,9 @@
 <?php
 $botToken = "903203803:AAGyVhkEsNITBDmBUgRyCfE2p5IWbbn45SY";
+
+
+
+
 $website = "https://api.telegram.org/bot".$botToken;
 $update = file_get_contents("php://input");
 $update = json_decode($update, TRUE);
@@ -11,7 +15,7 @@ switch($text)
 {
 	case "/start":
 		sendMessage($chatId,"Ciao <b>$nome</b>!",$tastierabenvenuto);
-		break
+		break;
 	case "INFORMAZIONI":
 		sendMessage($chatId,"Verrai ricontattato da un nostro consulente",$tastierabenvenuto);
 		break;

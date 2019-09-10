@@ -26,7 +26,7 @@ if(strpos($text, "/start") === 0 ) {
 }
 
 function sendMsg($id, $msg) {
-	$token = "{TOKEN}";
+	$token = "903203803:AAGyVhkEsNITBDmBUgRyCfE2p5IWbbn45SY";
 
 	$data = [
 		'text' => $msg,

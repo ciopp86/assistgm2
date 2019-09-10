@@ -14,7 +14,7 @@ $agg = json_encode($update,JSON_PRETTY_PRINT);
 switch($text)
 {
 	case "/start":
-		sendMessage($chatId,"Ciao <b>$nome</b>!",$tastierabenvenuto);
+		sendMessage($chatId,"Ciao <b>$nome</b>! Premi il tasto HOME per tornare al menù principale.",$tastierabenvenuto);
 		break;
 	case "INFORMAZIONI":
 		sendMessage($chatId,"Verrai ricontattato da un nostro consulente",$tastierabenvenuto);

@@ -1,37 +1,35 @@
 <?php
-$content = file_get_contents("php://input");
-$update = json_decode($content, true);
-
-if(!$update)
+$botToken = "903203803:AAGyVhkEsNITBDmBUgRyCfE2p5IWbbn45SY";
+$website = "https://api.telegram.org/bot".$botToken;
+$update = file_get_contents("php://input");
+$update = json_decode($update, TRUE);
+$chatId = $update['message']['from']['id'];
+$nome = $update['message']['from']['first_name'];
+$text = $update['message']['text'];
+$agg = json_encode($update,JSON_PRETTY_PRINT);
+switch($text)
 {
-  exit;
+	case "/start":
+		sendMessage($chatId,"Ciao <b>$nome</b>!",$tastierabenvenuto);
+		break
+	case "INFORMAZIONI":
+		sendMessage($chatId,"Verrai ricontattato da un nostro consulente",$tastierabenvenuto);
+		break;
+	case "ASSISTENZA":
+		sendMessage($chatId,"Quale problema riscontri?",$tastierabenvenuto);
+		break;
+	default:
+		$tastierabenvenuto = '["INFORMAZIONI"],["ASSISTENZA"],["HOME"]';
+		sendMessage($chatId,"Ciao <b>$nome</b>! Sono il tuo assistente GM Stream, in cosa posso esserti utile?",$tastierabenvenuto);
+	break;
 }
-
-$message = isset($update['message']) ? $update['message'] : "";
-$messageId = isset($message['message_id']) ? $message['message_id'] : "";
-$chatId = isset($message['chat']['id']) ? $message['chat']['id'] : "";
-$firstname = isset($message['chat']['first_name']) ? $message['chat']['first_name'] : "";
-$lastname = isset($message['chat']['last_name']) ? $message['chat']['last_name'] : "";
-$username = isset($message['chat']['username']) ? $message['chat']['username'] : "";
-$date = isset($message['date']) ? $message['date'] : "";
-$text = isset($message['text']) ? $message['text'] : "";
-
-$text = trim($text);
-$text = strtolower($text);
-
-$response = "";
-if(strpos($text, "/start") === 0 ) {
-	$response = "Ciao $firstname! \nMi presento, sono il tuo Bot.";
-	sendMsg($chatId, $response);
+function sendMessage($chatId,$text,$tastiera)
+{
+	if(isset($tastiera))
+	{
+		$tastierino = '&reply_markup={"keyboard":['.$tastiera.'],"resize_keyboard":true}';
+	}
+	$url = $GLOBALS[website]."/sendMessage?chat_id=$chatId&parse_mode=HTML&text=".urlencode($text).$tastierino;
+	file_get_contents($url);
 }
-
-function sendMsg($id, $msg) {
-	$token = "903203803:AAGyVhkEsNITBDmBUgRyCfE2p5IWbbn45SY";
-
-	$data = [
-		'text' => $msg,
-		'chat_id' => $id
-	];
-
-	file_get_contents("https://api.telegram.org/bot$token/sendMessage?" . http_build_query($data) );
-}
+?>
